@@ -43,21 +43,20 @@ function parseDirSync(dirPath, depth, dir = {}, level = 0) {
     return dir.items;
 }
 
-async function parseDirAsync2(dirPath, depth, level = 0) {
+async function parseDirAsync(dirPath, depth, level = 0) {
     if (depth && level > depth) return;
 
     const items = await fs.promises.readdir(dirPath);
-    const files = await Promise.all(items.map(async (item) => {
+    return await Promise.all(items.map(async (item) => {
         const itemPath = path.join(dirPath, item);
         const result = {name: item};
         return await isDirectoryAsync(itemPath) ? {
             name: item,
-            items: await parseDirAsync2(itemPath, depth, level + 1)
+            items: await parseDirAsync(itemPath, depth, level + 1)
         } : result;
     }));
-
-    return files;
 }
+
 
 try {
     const [inputPath, depth] = process.argv.slice(2, 5);
