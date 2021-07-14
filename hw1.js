@@ -69,7 +69,7 @@ try {
     if (rootPath) {
         console.log(path.basename(rootPath));
         //printTree(parseDir(rootPath, depth));
-        parseDirAsync2(rootPath, depth).then(r => printTree(r)).catch(e => console.error(e));
+        parseDirAsync(rootPath, depth).then(r => printTree(r)).catch(e => console.error(e));
     }
 } catch (err) {
     console.error(err);
