@@ -29,6 +29,7 @@ function printTree(dirItems, prefix = '') {
 function parseDirSync(dirPath, depth, dir = {}, level = 0) {
     if (depth && level > depth) return;
 
+    dir.items = [];
     fs.readdirSync(dirPath).forEach((itemName) => {
         const item = {name: itemName};
         const itemPath = path.join(dirPath, itemName);
@@ -55,7 +56,7 @@ async function parseDirAsync2(dirPath, depth, level = 0) {
         } : result;
     }));
 
-    return files.flat();
+    return files;
 }
 
 try {
