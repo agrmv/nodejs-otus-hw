@@ -1,0 +1,25 @@
+{
+  "name": "otus-hw",
+  "version": "1.0.0",
+  "main": "tree_utility.js",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agrmv/otus-hw.git"
+  },
+  "author": "agrmv",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agrmv/otus-hw/issues"
+  },
+  "homepage": "https://github.com/agrmv/otus-hw#readme",
+  "description": "otus hw3",
+  "dependencies": {
+    "jest": "^27.0.6"
+  },
+  "devDependencies": {
+    "jest-console": "^0.1.0"
+  }
+}
