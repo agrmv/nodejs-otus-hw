@@ -1,0 +1,13 @@
+{
+  "name": "otus-hw2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "split": "node splitter.js",
+    "generate": "node generator.js",
+    "test": "node --max-old-space-size=50 index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
