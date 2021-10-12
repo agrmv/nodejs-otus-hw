@@ -5,41 +5,20 @@ const config = require('./config');
 const {once} = require('events')
 const readline = require('readline');
 
-/**
- *
- * @param readStream
- * @returns {AsyncGenerator<string|string[], void, *>}
- */
-const streamToLines = async function* (readStream) {
-    let previous = '';
-    for await (const chunk of readStream) {
-        previous += chunk;
-        while (true) {
-            const eolIndex = previous.indexOf('\n');
-            if (eolIndex < 0) break;
 
-            yield previous.slice(0, eolIndex);
-            previous = previous.slice(eolIndex + 1);
-        }
-    }
-    if (previous.length > 0) {
-        yield previous;
-    }
-};
-
-// function getSubFilesIterators(tmpFiles) {
-//     return tmpFiles.map(fileName => fs.createReadStream(fileName)).map(stream => await streamToLines(stream))
-// }
-
-function getSubFilesIterators(tmpFiles) {
-    return tmpFiles.map(fileName => fs.createReadStream(fileName)).map(stream => readline.createInterface({
-        input: stream,
+const getSubFilesIterators = (tmpFiles) => {
+    return tmpFiles.map((fileName) => readline.createInterface({
+        input: fs.createReadStream(fileName),
         crlfDelay: Infinity
     })[Symbol.asyncIterator]())
 }
 
-
-function findMinNumber(obj) {
+/**
+ * Find min value
+ * @param obj
+ * @returns {{val: Number, key: String}}
+ */
+const findMinNumber = (obj) => {
     const [min] = Object.entries(obj).sort(([, a], [, b]) => a - b);
     return {key: min[0], val: min[1]};
 }
@@ -61,8 +40,7 @@ module.exports = async (subFiles) => {
         if (!line.done) numbers[key] = +line.value;
     }
 
-    while (true) {
-        if (!Object.keys(numbers).length) break;
+    while (Object.keys(numbers).length) {
         const min = findMinNumber(numbers);
 
         const nextLine = await subFileIterators[min.key].next();

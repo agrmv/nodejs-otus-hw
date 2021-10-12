@@ -36,6 +36,7 @@ module.exports = async (fileName, dir = config.dirForSubFiles, maxSubFileSize = 
             subFileSize = 0;
             continue;
         }
+
         subFileSize += (line + '\n').length;
         fileNumbers.push(+line);
     }

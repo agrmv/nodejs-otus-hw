@@ -12,8 +12,8 @@ const getRandomNumber = () => Math.round(Math.random() * (config.maxRandomNum - 
 module.exports = (fileName) => {
     console.log(`Start creating file ${fileName}...`);
     fs.writeFileSync(fileName, '');
-    while (fs.statSync(fileName)['size'] < config.largeFileSize) {
-        fs.appendFileSync(fileName, Array.from({length: 1000}, () => getRandomNumber()).join('\n'));
+    while (fs.statSync(fileName).size < config.largeFileSize) {
+        fs.writeFileSync(fileName, Array.from({length: 1000}, () => getRandomNumber()).join('\n') + '\n', {flag: 'a'});
     }
 
     console.log(`The file ${fileName} was created.`);
