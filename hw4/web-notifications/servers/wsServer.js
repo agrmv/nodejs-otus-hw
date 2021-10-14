@@ -13,7 +13,11 @@ module.exports = (port) => {
 
     wss.on('connection', ws => {
         ws.on('message', async (message) => {
-            await webpush.sendNotification(JSON.parse(message.toString()), JSON.stringify({title: 'otus-huyotus'}));
+            try {
+                await webpush.sendNotification(JSON.parse(message.toString()), JSON.stringify({title: 'otus-huyotus'}));
+            } catch (e) {
+                console.log(e)
+            }
         });
         ws.send('something');
     });

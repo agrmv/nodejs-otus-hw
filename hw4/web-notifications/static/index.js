@@ -6,8 +6,12 @@ ws.onmessage = event => console.log(event.data);
 let notificationInterval;
 ws.onopen = async () => {
     if ('serviceWorker' in navigator) {
-        await sendNotify();
-        notificationInterval = setInterval(await sendNotify, 1000 * 15);
+        try {
+            await sendNotify();
+            notificationInterval = setInterval(await sendNotify, 1000 * 15);
+        } catch (e) {
+            console.log(e)
+        }
     }
 }
 ws.onclose = () => {
