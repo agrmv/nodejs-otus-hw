@@ -1,6 +1,6 @@
-import { HttpException, HttpStatus } from "@nestjs/common"
-import { extname } from "path"
-import { v4 as uuidv4 } from 'uuid';
+import {HttpException, HttpStatus} from "@nestjs/common"
+import {extname} from "path"
+import {v4 as uuidv4} from 'uuid';
 
 const imageFileFilter = (req, file, callback) => {
     if (!extname(file.originalname).match(/\.(jpg|jpeg|png|gif)$/)) {

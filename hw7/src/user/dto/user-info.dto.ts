@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger"
+import {ApiProperty} from "@nestjs/swagger"
 
 export class UserInfoDto {
     @ApiProperty({
@@ -17,7 +17,7 @@ export class UserInfoDto {
         required: false
     })
     photo: string
-    
+
     @ApiProperty({
         required: false
     })

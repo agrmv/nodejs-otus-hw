@@ -1,12 +1,24 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
-import { GetUser } from "../auth/decorator/get-user.decorator";
-import { User } from "../auth/entity/user.entity";
-import { TodoDto } from "./dto/todo.dto";
-import { Todo } from "./entity/todo.entity";
-import { TodoPayload } from "./interface/todo-payload.interface";
-import { TodoService } from "./service/todo.service";
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    ParseIntPipe,
+    Patch,
+    Post,
+    UseGuards,
+    UsePipes,
+    ValidationPipe
+} from "@nestjs/common";
+import {AuthGuard} from "@nestjs/passport";
+import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
+import {GetUser} from "../auth/decorator/get-user.decorator";
+import {User} from "../auth/entity/user.entity";
+import {TodoDto} from "./dto/todo.dto";
+import {Todo} from "./entity/todo.entity";
+import {TodoPayload} from "./interface/todo-payload.interface";
+import {TodoService} from "./service/todo.service";
 
 @ApiTags('Todo')
 @ApiBearerAuth()
@@ -16,7 +28,8 @@ import { TodoService } from "./service/todo.service";
 export class TodoController {
     constructor(
         private todoService: TodoService
-    ) {}
+    ) {
+    }
 
     @Get()
     getAllTodo(
@@ -47,7 +60,7 @@ export class TodoController {
         @Param('id', ParseIntPipe) id: number,
         @Body() todoDto: TodoDto,
         @GetUser() user: User
-    ): Promise<TodoPayload>{
+    ): Promise<TodoPayload> {
         return this.todoService.updateTodoById(id, todoDto, user)
     }
 
@@ -55,7 +68,7 @@ export class TodoController {
     deleteTodoById(
         @Param('id', ParseIntPipe) id: number,
         @GetUser() user: User
-    ): Promise<{ message: string }>{
+    ): Promise<{ message: string }> {
         return this.todoService.deleteTodoById(id, user)
     }
 }

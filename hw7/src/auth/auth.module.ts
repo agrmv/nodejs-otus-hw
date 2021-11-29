@@ -1,16 +1,16 @@
-import { Global, Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthController } from './auth.controller';
-import { UserRepository } from './repository/user.repository';
-import { AuthService } from './service/auth.service';
-import { JwtStrategy } from './jwt-strategy';
+import {Global, Module} from '@nestjs/common';
+import {JwtModule} from '@nestjs/jwt';
+import {PassportModule} from '@nestjs/passport';
+import {TypeOrmModule} from '@nestjs/typeorm';
+import {AuthController} from './auth.controller';
+import {UserRepository} from './repository/user.repository';
+import {AuthService} from './service/auth.service';
+import {JwtStrategy} from './jwt-strategy';
 
 @Global()
 @Module({
     imports: [
-        PassportModule.register({ defaultStrategy: 'jwt' }),
+        PassportModule.register({defaultStrategy: 'jwt'}),
         JwtModule.register({
             secret: process.env.JWT_SECRET,
             signOptions: {
@@ -29,4 +29,5 @@ import { JwtStrategy } from './jwt-strategy';
         PassportModule
     ]
 })
-export class AuthModule {}
+export class AuthModule {
+}

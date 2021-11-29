@@ -1,19 +1,20 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { User } from "../../auth/entity/user.entity";
-import { TodoDto } from "../dto/todo.dto";
-import { Todo } from "../entity/todo.entity";
-import { TodoPayload } from "../interface/todo-payload.interface";
-import { TodoRepository } from "../repository/todo.repository";
+import {Injectable, NotFoundException} from "@nestjs/common";
+import {InjectRepository} from "@nestjs/typeorm";
+import {User} from "../../auth/entity/user.entity";
+import {TodoDto} from "../dto/todo.dto";
+import {Todo} from "../entity/todo.entity";
+import {TodoPayload} from "../interface/todo-payload.interface";
+import {TodoRepository} from "../repository/todo.repository";
 
 @Injectable()
 export class TodoService {
     constructor(
         @InjectRepository(TodoRepository)
         private todoRepository: TodoRepository
-    ) {}
+    ) {
+    }
 
-    async getAllTodo(user: User): Promise<TodoPayload[]>{
+    async getAllTodo(user: User): Promise<TodoPayload[]> {
         return this.todoRepository.getAllTodo(user)
     }
 
@@ -28,7 +29,7 @@ export class TodoService {
         id: number,
         user: User
     ): Promise<Todo> {
-        const todo = await this.todoRepository.findOne({ where: { id, userId: user.id } })
+        const todo = await this.todoRepository.findOne({where: {id, userId: user.id}})
 
         if (!todo) {
             throw new NotFoundException(`This ${id} is not found`);
@@ -52,11 +53,11 @@ export class TodoService {
     }
 
     async deleteTodoById(id: number, user: User): Promise<{ message: string }> {
-        const todo = await this.todoRepository.delete({ id, userId: user.id })
+        const todo = await this.todoRepository.delete({id, userId: user.id})
 
         if (todo.affected === 0) {
             throw new NotFoundException(`This ${id} is not found`)
         }
-        return { message: 'Deleted successfully !' }
+        return {message: 'Deleted successfully !'}
     }
 }

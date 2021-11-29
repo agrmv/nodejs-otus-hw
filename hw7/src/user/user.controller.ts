@@ -1,15 +1,15 @@
-import { Body, Controller, Get, Patch, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
-import { FileInterceptor } from "@nestjs/platform-express";
-import { ApiBearerAuth, ApiConsumes, ApiTags } from "@nestjs/swagger";
-import { GetUser } from "../auth/decorator/get-user.decorator";
-import { User } from "../auth/entity/user.entity";
+import {Body, Controller, Get, Patch, UploadedFile, UseGuards, UseInterceptors} from "@nestjs/common";
+import {AuthGuard} from "@nestjs/passport";
+import {FileInterceptor} from "@nestjs/platform-express";
+import {ApiBearerAuth, ApiConsumes, ApiTags} from "@nestjs/swagger";
+import {GetUser} from "../auth/decorator/get-user.decorator";
+import {User} from "../auth/entity/user.entity";
+import {userInfoData} from "./interface/user-info.interface";
+import {UserService} from "./service/user.service";
+import {diskStorage} from "multer";
+import {UserInfoDto} from "./dto/user-info.dto";
 
-const { editFileName, imageFileFilter } = require('../utils/file-upload.utils')
-import { userInfoData } from "./interface/user-info.interface";
-import { UserService } from "./service/user.service";
-import { diskStorage } from "multer";
-import { UserInfoDto } from "./dto/user-info.dto";
+const {editFileName, imageFileFilter} = require('../utils/file-upload.utils')
 
 // < -- Swagger Implementation Start -- >
 @ApiTags('User')
@@ -20,7 +20,8 @@ import { UserInfoDto } from "./dto/user-info.dto";
 export class UserController {
     constructor(
         private userService: UserService
-    ) {}
+    ) {
+    }
 
     @Get()
     getUserInfo(
@@ -32,13 +33,13 @@ export class UserController {
     @Patch()
     @ApiConsumes('multipart/form-data')
     @UseInterceptors(
-        FileInterceptor('photo', { 
+        FileInterceptor('photo', {
             limits: {
                 fileSize: 2097152
             },
             fileFilter: imageFileFilter,
-            storage:  diskStorage({
-                destination: function(req, file, cb) {
+            storage: diskStorage({
+                destination: function (req, file, cb) {
                     cb(null, './uploads')
                 },
                 filename: editFileName
@@ -49,7 +50,7 @@ export class UserController {
         @UploadedFile() file,
         @Body() userInfoDto: UserInfoDto,
         @GetUser() user: User
-    ):Promise<userInfoData> {
+    ): Promise<userInfoData> {
         if (file) {
             userInfoDto.photo = file.originalname
             userInfoDto.modified_photo = file.filename
