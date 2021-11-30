@@ -27,9 +27,11 @@ services:
       - APP_PORT=${APP_PORT}
     ports: 
       - "3000:3000"
-    container_name: nest-todo-app-be
+      - "9229:9229"
+    container_name: nest-todo-app
     depends_on: 
       - db
+    command: node --inspect=0.0.0.0:9229 -r ts-node/register -r tsconfig-paths/register ./src/main.ts
     volumes: 
       - .:/app
       - /app/node_modules

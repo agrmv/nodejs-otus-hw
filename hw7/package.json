@@ -1,10 +1,9 @@
 {
-  "name": "todoAppOnNestJs",
+  "name": "nest-todo-app",
   "version": "0.0.1",
   "description": "",
   "author": "",
   "private": true,
-  "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -64,6 +63,7 @@
     "eslint-config-prettier": "7.0.0",
     "eslint-plugin-prettier": "^3.1.4",
     "jest": "^26.6.3",
+    "nodemon": "^2.0.15",
     "prettier": "^2.1.2",
     "supertest": "^6.0.0",
     "ts-jest": "^26.4.3",

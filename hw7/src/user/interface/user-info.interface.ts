@@ -3,5 +3,5 @@ export interface userInfoData {
     petName?: string,
     photo?: string,
     modified_photo?: string,
-    address: string
+    address?: string
 }
